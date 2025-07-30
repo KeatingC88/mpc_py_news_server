@@ -1,9 +1,10 @@
-# Ignore .env files
+# Ignore files
 .env
 .env.*
-
-# Ignore all .txt files
-*.txt
-*.md
+Dockerfile
+mpc_py_news_server.yaml
 /.vs
 /app/__pycache__
+/app/Models/__pycache__
+/app/Repository/__pycache__
+/app/Services/__pycache__
