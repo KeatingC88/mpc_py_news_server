@@ -8,5 +8,5 @@ from app.Models import Article
 load_dotenv()
 
 async def Initializing_Mongo_DB():
-    client = motor.motor_asyncio.AsyncIOMotorClient(os.getenv("MONGO_URI"))
+    client = motor.motor_asyncio.AsyncIOMotorClient(os.getenv("DOCKER_INTERNAL_MONGO_URI"))
     await init_beanie(database=client[os.getenv("MONGO_DB")], document_models=[Article])

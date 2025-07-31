@@ -1,8 +1,6 @@
 # Ignore files
 .env
 .env.*
-Dockerfile
-mpc_py_news_server.yaml
 /.vs
 /app/__pycache__
 /app/Models/__pycache__
