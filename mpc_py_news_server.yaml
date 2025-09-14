@@ -5,7 +5,7 @@ services:
     container_name: ${DOCKER_CONTAINER_NAME}
     image: ${DOCKER_CONTAINER_IMAGE_NAME}
     networks:
-      - mpc_py_news_server_link_mpc_mongo_py_news_database
+      - mpc_py_news_server_link_mpc_mongo_news_database
     build:
       context: .
       dockerfile: Dockerfile
@@ -18,6 +18,6 @@ services:
     command: uvicorn app.main:app --host 0.0.0.0 --port ${DOCKER_CONTAINER_PORT} --reload
 
 networks:
-  mpc_py_news_server_link_mpc_mongo_py_news_database:
+  mpc_py_news_server_link_mpc_mongo_news_database:
     external: true
 
