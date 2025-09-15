@@ -3,7 +3,7 @@ from datetime import datetime
 
 from app.Repository.mongo_context import Initializing_Mongo_DB
 from app.Models.article import Article
-from app.Models.json_web_token_dto import JSON_Web_Token_DTO
+from app.Models.get_articles_dto import Get_Articles_DTO
 from app.Models.encrypted_new_article_dto import Encrypted_New_Article_DTO
 from app.Models.encrypted_edit_article_dto import Encrypted_Edit_Article_DTO
 from app.Models.encrypted_delete_article_dto import Encrypted_Delete_Article_DTO
@@ -79,12 +79,19 @@ async def create_article(dto: Encrypted_New_Article_DTO):
         raise HTTPException(status_code=400, detail=f"Error B")
 
 @app.post("/get/articles/")
-async def get_all_articles(dto: JSON_Web_Token_DTO):
+async def get_all_articles(dto: Get_Articles_DTO):
     if not Authenticate_JWT_Claims(dto.token):
         raise HTTPException(status_code=401, detail="Error C")
 
-    articles = await Article.find(Article.deleted == False).to_list()
-    json_ready = jsonable_encoder(articles)
+    articles = await Article.find(Article.deleted == False).skip(dto.page_index).limit(10).to_list()
+    count = await Article.find(Article.deleted == False).count()
+
+    response_obj = {
+        "articles": articles,
+        "count": count
+    }
+
+    json_ready = jsonable_encoder(response_obj)
     json_string = json.dumps(json_ready)
     encrypted_string = Encryptor(json_string)
     return encrypted_string
